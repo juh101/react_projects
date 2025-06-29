@@ -41,12 +41,13 @@ setState: the updater function */
       <h1>Chai aur React</h1>
       <h2>Counter Value: <span className='myCounter'>{counter}</span></h2>
       <button onClick={addVal}>Incr</button>
-      <br />
+      <br/><br/>
       <button onClick={subVal}>Decr</button>
       <h4>footer: count is {counter}</h4>
       <button onClick={showVal}>update value</button>
       <p className='showvalue'></p>
-      <button onClick={addTen}>add ten</button><br /><br />
+      <button onClick={addTen}>add ten</button>
+      <br /><br />
       <button onClick={() => {return setCounter(0)}}>Reset</button>
     </>
   )
