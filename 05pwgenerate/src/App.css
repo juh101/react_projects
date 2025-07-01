@@ -1,1 +1,7 @@
 @import "tailwindcss";
+button:hover{
+  background-color: rgb(116, 186, 255);
+  color: black;
+  border: 2px solid rgb(4, 4, 168);
+  transform: scale(1.08);
+}
