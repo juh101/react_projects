@@ -76,6 +76,7 @@ function App() {
                 currencyOption={options}
                 selectCurrency={to}
                 amountDisable={true}
+                // currencyDisable={true} // Sets 'To'->inr
 
               />
             </div>
