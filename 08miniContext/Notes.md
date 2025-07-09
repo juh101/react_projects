@@ -10,6 +10,7 @@ Why It's a Problem:
 - Can cause unnecessary re-renders.
 
 Solution - React Context API
+
 # Context API to the Rescue
 The Context API allows you to:
 - Store shared data (like user, theme, language) in one place.
@@ -29,12 +30,16 @@ making provider
 const UserContextProvider = ({ children }) => {
     const [User,setUser] = useState(null)
     return(
+
     <UserContext.Provider value={{User,setUser}}>
         {children}
     </UserContext.Provider>
+
     )
 }
 
 - This makes the User state and setUser function available to all nested components via useContext(UserContext).
--{children} Renders Nested Components
+- {children} Renders Nested Components
 Whatever you wrap with <UserContextProvider> will appear inside this component.
+
+    
