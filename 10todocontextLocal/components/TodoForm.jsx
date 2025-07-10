@@ -15,8 +15,8 @@ function TodoForm() {
             todo: todo,                 // the current input value
             completed: false            // and mark it as not completed
         });
-
-        setTodo('');                  // Clear the input box after submission
+        console.log(todo);
+        setTodo("");                  // Clear the input box after submission
     };
 
 
