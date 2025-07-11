@@ -12,8 +12,8 @@ function App() {
 
 
   const addTodo = (todo) => {
-    const newTodo = { id: Date.now(), ...todo };
-    setTodos((prev) => [newTodo, ...prev]);
+    const newTodo = { ...todo , id: Date.now()};
+    setTodos((prev) => [...prev, newTodo]);
     console.log(newTodo.id);
 
   }
