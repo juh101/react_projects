@@ -1,5 +1,5 @@
 import './App.css'
-import config from './conf/config';
+import config from './conf/conf';
 
 function App() {
   console.log(import.meta.env.VITE_APPWRITE_URL);
