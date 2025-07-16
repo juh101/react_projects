@@ -1,4 +1,4 @@
-const config = {
+const conf = {
     appwiteURL: String(import.meta.env.VITE_APPWRITE_URL) || "https://fra.cloud.appwrite.io/v1",
     appwriteProjectId: String(import.meta.env.VITE_APPWRITE_PROJECT_ID) || "68724d3b002f7590ff25",
     appwriteDatabaseId: String(import.meta.env.VITE_APPWRITE_DATABASE_ID) || "68724e31002b2683193e",
@@ -7,4 +7,4 @@ const config = {
     
 }
 
-export default config
+export default conf
