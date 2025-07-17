@@ -5,6 +5,7 @@ import authService from './appwrite/auth';
 import { login,logout } from './store/authSlice';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
+import { Outlet } from 'react-router-dom';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -26,12 +27,13 @@ function App() {
   return !loading ? (
     <div className="flex justify-center items-center h-screen">
       <div className='block w-full max-w-4xl mx-auto'>
-        <Header />
+        {/* <Header /> */}
+        {/* <Outlet /> */}
         <main className="container my-5 p-4">
           <h2 className="text-xl font-semibold mb-4">Welcome to MegaBlog</h2>
           <p className="text-gray-200">This is a simple blogging platform built with React and Redux.</p>
         </main>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </div>
   ): (
