@@ -45,6 +45,7 @@ export class AuthService{
             throw error;
         }
     }
+                         
     async getCurrentUser() {
         try {
             const user = await this.account.get();
