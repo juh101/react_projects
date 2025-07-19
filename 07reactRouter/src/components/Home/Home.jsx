@@ -18,7 +18,8 @@ export default function Home() {
 
                         <Link
                             className="inline-flex text-white items-center px-6 py-3 font-medium bg-orange-700 rounded-lg hover:opacity-75"
-                            to="https://www.youtube.com/watch?v=VJov5QWEKE4&list=PLu71SKxNbfoDqgPchmvIsL4hTnJIrtige&index=12"
+                            to="/download"
+                            target="_blank"
                         >
                             <svg
                                 fill="white"
