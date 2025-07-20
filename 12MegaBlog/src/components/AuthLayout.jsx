@@ -13,9 +13,11 @@ function Protected({
         //TODO: simplify this logic
         if(authentication && authStatus !== authentication) {
             navigate('/login');
+            // user exists but isnt logged in
         }
         else if(!authentication && authStatus !== authentication) {
             navigate('/');
+            //user dosent exist , thus go to home
         }
         setLoader(false);
     },[authStatus, navigate, authentication]);
