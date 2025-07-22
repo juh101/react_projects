@@ -1,5 +1,7 @@
 import conf from "../conf/conf";
-import { Client, Databases, ID, Storage, Query } from "appwrite";
+import { Client, Databases, ID, Storage, Query, ImageGravity, ImageFormat } from "appwrite";
+import { Permission, Role } from "appwrite";
+
 
 export class Service {
     client = new Client()
@@ -8,11 +10,12 @@ export class Service {
 
     constructor() {
         this.client
-            .setEndpoint(conf.appwrite.endpoint)
-            .setProject(conf.appwrite.project)
+            .setEndpoint(conf.appwriteURL)
+            .setProject(conf.appwriteProjectId)
 
         this.databases = new Databases(this.client);
         this.bucket = new Storage(this.client);
+        const storage = new Storage(this.client);
     }
     async createPost({ title, slug, content, status, image, userId }) {
         try {
@@ -26,8 +29,11 @@ export class Service {
                     status,
                     image,
                     userId
-                }
+                },
+               
             );
+            console.log("Post created successfully:", response);
+
             return response;
 
         } catch (error) {
@@ -68,7 +74,7 @@ export class Service {
         }
     }
 
-    async getPost(slug){
+    async getPost(slug) {
         try {
             const response = await this.databases.getDocument(
                 conf.appwriteDatabaseId,
@@ -81,14 +87,14 @@ export class Service {
         }
     }
 
-    async getPosts(query = [Query.equal("status" , "active")]) {
+    async getPosts(query = [Query.equal("status", "active")]) {
         try {
             const response = await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 query
             );
-            return response.documents;
+            return response.documents; // array of response objects
         } catch (error) {
             console.log("Error fetching posts:", error);
         }
@@ -99,7 +105,8 @@ export class Service {
             const response = await this.bucket.createFile(
                 conf.appwriteBucketId,
                 ID.unique(),
-                file
+                file,
+                [Permission.read(Role.any())]
             );
             console.log("Image uploaded successfully:", response);
             return response;
@@ -122,9 +129,13 @@ export class Service {
     }
 
     getFilePreview(fileId) {
-        return this.bucket.getFilePreview(
+        return this.bucket.getFileView(
             conf.appwriteBucketId,
-            fileId
+            fileId,
+            0,          // width (0 = original)
+            0,          // height (0 = original)
+            undefined,  // gravity
+            undefined,
         );
     }
 

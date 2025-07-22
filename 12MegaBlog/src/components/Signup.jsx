@@ -13,20 +13,17 @@ function Signup() {
     const dispatch = useDispatch()
     const { register, handleSubmit, formState: { errors } } = useForm()
 
-    const signup = async (data) => {
-        setError(null)
+    const signup = async(data) => {
+        setError("")
         try {
-            const { email, password, name } = data
-            const userData = await authService.createAccount(email, password, name)
+            const userData = await authService.createAccount(data)
             if (userData) {
-                const currUser = await authService.getCurrentUser()
-                if (currUser) {
-                    dispatch(authLogin(currUser))
-                }
-                navigate('/')
+                console.log("userData", userData);
+                const userData = await authService.getCurrentUser()
+                if(userData) dispatch(login(userData));
+                navigate("/")
             }
-        }
-        catch (error) {
+        } catch (error) {
             setError(error.message)
         }
     }
@@ -74,7 +71,7 @@ function Signup() {
                             })}
                         />
                         {errors.email && (
-                            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+                            <p className="text-black-500 text-sm mt-1">{errors.email.message}</p>
                         )}
                         <Input
                             label="Password: "

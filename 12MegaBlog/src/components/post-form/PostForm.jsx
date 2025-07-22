@@ -17,11 +17,17 @@ function PostForm({ post }) {
         }
     });
     const navigate = useNavigate();
-    const userData = useSelector((state) => state.userData);
+    const userData = useSelector((state) => state.auth.userData?.userData);
+
+    // console.log("userData in store:", userData);
+
 
     const submit = async (data) => {
+
+        console.log("submitted data", data);
+
         if (post) {
-            const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
+            const file = data.image[0] ? await appwriteService.uploadImage(data.image[0]) : null;
 
             if (file && post.image) {
                 appwriteService.deleteImage(post.image);
@@ -38,14 +44,30 @@ function PostForm({ post }) {
 
         }
         else {
-            const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
-            const dbPost = await appwriteService.createPost({
-                ...data,
-                image: file ? file.$id : null,
-                userId: userData.$id
-            })
-            if (dbPost) {
-                navigate(`/post/${dbPost.$id}`);
+            const file = await appwriteService.uploadImage(data.image[0]);
+
+            if (file) {
+                const fileId = file.$id;
+                data.image = fileId;
+                console.log("File uploaded successfully:", fileId);
+                const previewUrl = appwriteService.getFilePreview(fileId);
+                console.log("File preview URL:", previewUrl);
+                
+                
+                if (!userData) {
+                    console.error("User data not found. Aborting post creation.");
+                    return;
+                }
+                console.log("user data: " , userData);
+                console.log("Creating post with user ID:", userData.$id);
+                
+                const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id });
+                console.log("created post", dbPost);
+                console.log("Post ID:", dbPost?.$id);                 
+
+                if (dbPost) {
+                    navigate(`/post/${dbPost.$id}`);
+                }
             }
         }
     }
@@ -92,7 +114,7 @@ function PostForm({ post }) {
                         setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
                     }}
                 />
-                <RTE label="Content :" name="content" control={control}  />
+                <RTE label="Content :" name="content" control={control} />
             </div>
             <div className="w-1/3 px-2">
                 <Input
