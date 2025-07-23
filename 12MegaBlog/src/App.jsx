@@ -30,8 +30,8 @@ function App() {
 
       <main className="flex-grow container max-w-4xl mx-auto my-5 p-4">
         <Outlet />
-        <h2 className="text-xl font-semibold mb-4">Welcome to MegaBlog</h2>
-        <p className="text-gray-200">This is a simple blogging platform built with React and Redux.</p>
+        
+        
       </main>
 
       <Footer />

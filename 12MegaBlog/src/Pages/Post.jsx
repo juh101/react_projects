@@ -10,7 +10,7 @@ export default function Post() {
     const { slug } = useParams();
     const navigate = useNavigate();
 
-    const userData = useSelector((state) => state.auth.userData);
+    const userData = useSelector((state) => state.auth.userData.userData);
 
     const isAuthor = post && userData ? post.userId === userData.$id : false;
 
@@ -23,12 +23,21 @@ export default function Post() {
         } else navigate("/");
     }, [slug, navigate]);
 
+    useEffect(() => {
+        if(post && userData){
+        console.log("post.userId: ", post.userId);
+        console.log("userData.id: ", userData.$id);
+        
+        }        
+    },[])
+
     const deletePost = () => {
         appwriteService.deleteDocument(post.$id).then((status) => {
             if (status) {
-                appwriteService.deleteFile(post.featuredImage);
-                navigate("/");
+                appwriteService.deleteImage(post.featuredImage);
+                
             }
+            navigate("/");
         });
     };
 

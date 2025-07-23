@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Input, Select, RTE } from "../index"
 import appwriteService from "../../appwrite/config";
@@ -27,6 +27,9 @@ function PostForm({ post }) {
         console.log("submitted data", data);
 
         if (post) {
+            console.log("post image is: ", post.image);
+            console.log("uploaded ", data.image[0]);
+            
             const file = data.image[0] ? await appwriteService.uploadImage(data.image[0]) : null;
 
             if (file && post.image) {
@@ -38,6 +41,7 @@ function PostForm({ post }) {
                 image: file ? file.$id : post.image,
 
             })
+
             if (dbPost) {
                 navigate(`/post/${dbPost.$id}`);
             }
@@ -84,6 +88,7 @@ function PostForm({ post }) {
     }, [])
 
     React.useEffect(() => {
+        
         const subscription = watch((value, { name }) => {
             if (name === "title") {
                 setValue("slug", slugTransform(value.title), { shouldValidate: true });
@@ -95,6 +100,11 @@ function PostForm({ post }) {
         }
 
     }, [watch, slugTransform, setValue]);
+
+
+    useEffect(() => {
+                
+    },[])
 
     return (
         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
@@ -124,13 +134,13 @@ function PostForm({ post }) {
                     accept="image/png, image/jpg, image/jpeg, image/gif"
                     {...register("image", { required: !post })}
                 />
-                {post && (
+                {(post) && (
                     <div className="w-full mb-4">
-                        <img
+                        {post.image && <img
                             src={appwriteService.getFilePreview(post.image)}
                             alt={post.title}
                             className="rounded-lg"
-                        />
+                        />}
                     </div>
                 )}
                 <Select

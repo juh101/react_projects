@@ -1,4 +1,4 @@
-import React, { use } from 'react'
+
 import { Container, PostForm } from '../components/index';
 import { useEffect, useState } from 'react';
 import appwriteService from '../appwrite/config';
@@ -14,6 +14,7 @@ function EditPost() {
             appwriteService.getPost(slug).then((post) => {
                 if (post) {
                     setPosts(post);
+                    console.log("post image is: ", post.image);
                 }
                 else {
                     navigate('/'); // fallback if post not found

@@ -1,8 +1,12 @@
 import React from 'react'
 
-function Logo({width = '100px'}) {
+function Logo({ width = '100px' }) {
   return (
-    <div>Logo</div>
+    <span className="text-3xl font-extrabold text-pink-600">
+      Blogged<span className="text-gray-800">In</span>
+    </span>
+
+
   )
 }
 
