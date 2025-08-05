@@ -1,7 +1,7 @@
 import conf from "../conf/conf";
 import { Client, Databases, ID, Storage, Query, ImageGravity, ImageFormat } from "appwrite";
 import { Permission, Role } from "appwrite";
-
+import AuthService from "./auth";
 
 export class Service {
     client = new Client()
@@ -15,7 +15,7 @@ export class Service {
 
         this.databases = new Databases(this.client);
         this.bucket = new Storage(this.client);
-        const storage = new Storage(this.client);
+        // const storage = new Storage(this.client);
     }
     async createPost({ title, slug, content, status, image, userId }) {
         try {
@@ -30,7 +30,7 @@ export class Service {
                     image,
                     userId
                 },
-               
+
             );
             console.log("Post created successfully:", response);
 
@@ -97,6 +97,27 @@ export class Service {
             return response.documents; // array of response objects
         } catch (error) {
             console.log("Error fetching posts:", error);
+        }
+    }
+
+    async getMyPosts() {
+        const user = await AuthService.getCurrentUser();
+        const userId = user.$id;
+
+        try {
+            const response = await this.databases.listDocuments(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
+                [
+                    Query.equal("userId", userId),
+                    Query.orderAsc('$createdAt'),
+                ]
+            );
+
+            console.log(response.documents);
+            return response.documents;
+        } catch (error) {
+            console.error("Error fetching user posts:", error);
         }
     }
 

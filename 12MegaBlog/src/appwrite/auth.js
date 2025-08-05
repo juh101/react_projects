@@ -61,6 +61,8 @@ export class AuthService {
     async logout() {
             try {
                 await this.account.deleteSession('current');
+                // console.log(resp);
+                
             } catch (error) {
                 console.error("Error logging out:", error);
                 throw error;

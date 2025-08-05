@@ -16,6 +16,7 @@ import Post from "./pages/Post";
 
 import AllPosts from "./pages/AllPosts";
 import Home from "./Pages/Home";
+import MyPosts from "./Pages/MyPosts";
 
 
 
@@ -63,6 +64,14 @@ const router = createBrowserRouter([{
       element: (
         <AuthLayout authentication>
           <EditPost />
+        </AuthLayout>
+      ),
+    },
+    {
+      path: "/my-posts",
+      element: (
+        <AuthLayout authentication>
+          <MyPosts />
         </AuthLayout>
       ),
     },
