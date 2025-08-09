@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import appwriteService from '../appwrite/config';
 import { Container, PostCard } from '../components/index';
+import { useNavigate } from 'react-router-dom';
 
 function AllPosts() {
     const [posts, setPosts] = useState([]);
@@ -11,7 +12,7 @@ function AllPosts() {
                 setPosts(po);
             }
         });
-    }, []);
+    }, [])
     return (
         <div className='w-full py-8'>
             <Container>
